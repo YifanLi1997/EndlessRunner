@@ -11,9 +11,13 @@ public class TileSpawner : MonoBehaviour
     [SerializeField] int numberOfInitialTiles = 5;
 
     private int _tileCount = 0;
+    private ObjectPooler objectPooler;
+
     
     void Start()
     {
+        objectPooler = ObjectPooler.Instance;
+
         // the first one will always be tile 0
         SpawnTile(0);
 
@@ -35,7 +39,8 @@ public class TileSpawner : MonoBehaviour
 
     private void SpawnTile(int tileIndex)
     {
-        GameObject newTile = Instantiate(tiles[tileIndex], Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
+        //GameObject newTile = Instantiate(tiles[tileIndex], Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
+        GameObject newTile = objectPooler.SpawnFromPool("Tile_" + (tileIndex+1).ToString(), Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
         _tileCount++;
     }
 }
