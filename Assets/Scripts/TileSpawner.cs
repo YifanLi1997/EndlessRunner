@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TileSpawner : MonoBehaviour
 {
@@ -9,8 +10,12 @@ public class TileSpawner : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] float lengthOfPerTile = 20;
     [SerializeField] int numberOfInitialTiles = 5;
+    [SerializeField] TextMeshProUGUI scoreText;
 
-    private int _tileCount = 0;
+    // only for visualization
+    [Header("Only for Config")]
+    [SerializeField] private int _score = 0;
+    [SerializeField] private int _tileCount = 0;
     private ObjectPooler objectPooler;
 
     
@@ -26,6 +31,7 @@ public class TileSpawner : MonoBehaviour
             SpawnTile(UnityEngine.Random.Range(0, tiles.Length));
         }
 
+        UpdateUIText();
     }
 
     void Update()
@@ -42,5 +48,14 @@ public class TileSpawner : MonoBehaviour
         //GameObject newTile = Instantiate(tiles[tileIndex], Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
         GameObject newTile = objectPooler.SpawnFromPool("Tile_" + (tileIndex+1).ToString(), Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
         _tileCount++;
+        UpdateUIText();
+    }
+
+    private void UpdateUIText()
+    {
+        // _score = _tileCount - 5;
+        _score = Mathf.FloorToInt(player.position.z / lengthOfPerTile);
+        _score = (_score <= 0)? 0: _score;
+        scoreText.text = "Score: " + _score.ToString();
     }
 }

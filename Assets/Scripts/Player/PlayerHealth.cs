@@ -8,11 +8,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] int playerHealth = 1;
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] GameObject gameOverPanel;
-    private CharacterController _characterController;
 
     void Start()
     {
-        _characterController = GetComponent<CharacterController>();
         Time.timeScale = 1;
         UpdateUIText();
     }
