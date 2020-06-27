@@ -36,6 +36,7 @@ public class PlayerPhysics : MonoBehaviour
 
     private void Jump()
     {
+        // Todo: fix the bug that the player take obstacles as ground
         if (_characterController.isGrounded)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
