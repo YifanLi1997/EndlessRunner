@@ -24,6 +24,8 @@ public class PlayerPhysics : MonoBehaviour
     
     void Update()
     {
+        if (!PlayerManager.gameStarted || PlayerManager.gameOver) return;
+
         Gravity();
         Jump();
         LeftRightMove();
@@ -84,6 +86,7 @@ public class PlayerPhysics : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!PlayerManager.gameStarted || PlayerManager.gameOver) return;
         _characterController.Move(_moveDirection * Time.fixedDeltaTime);
     }
 }

@@ -7,14 +7,12 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] int playerHealth = 1;
     [SerializeField] TextMeshProUGUI healthText;
-    [SerializeField] GameObject gameOverPanel;
 
     [Header("Only for Config")]
     [SerializeField] GameObject c_hit;
 
     void Start()
     {
-        Time.timeScale = 1;
         UpdateUIText();
     }
 
@@ -27,8 +25,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (playerHealth <= 0)
         {
-            Time.timeScale = 0;
-            gameOverPanel.SetActive(true);
+            PlayerManager.gameOver = true;
         }
     }
 
