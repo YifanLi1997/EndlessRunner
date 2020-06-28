@@ -36,10 +36,10 @@ public class PlayerPhysics : MonoBehaviour
 
     private void Jump()
     {
-        // Todo: fix the bug that the player take obstacles as ground
         if (_characterController.isGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            //if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (InputController.swipeUp)
             {
                 _moveDirection.y = jumpForce;
             }
@@ -51,15 +51,18 @@ public class PlayerPhysics : MonoBehaviour
     {
         Vector3 targetPos = transform.position;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (InputController.swipeLeft)
         {
             targetPos.x = Mathf.Clamp(transform.position.x - laneWidth, -laneWidth, laneWidth);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        //else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (InputController.swipeRight)
         {
             targetPos.x = Mathf.Clamp(transform.position.x + laneWidth, -laneWidth, laneWidth);
         }
 
+        #region Notes for a bug
         /* Solution 1 - https://forum.unity.com/threads/character-controller-ignores-transform-position.617107/
          * The character controller has it's own internal definition of what position it has,
          * and will set the transform's position to that every frame, so you can't move it with transform.position.
@@ -73,6 +76,7 @@ public class PlayerPhysics : MonoBehaviour
          * auto sync transforms is disabled in the physics settings,
          * so characterController.Move() won't necessarily be aware of the new pose as set by the transform
          */
+        #endregion
 
         //transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * 80);
         transform.position = targetPos; // TODO: animation to smooth the transition

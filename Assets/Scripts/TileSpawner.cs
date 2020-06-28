@@ -14,8 +14,9 @@ public class TileSpawner : MonoBehaviour
 
     // only for visualization
     [Header("Only for Config")]
-    [SerializeField] private int _score = 0;
-    [SerializeField] private int _tileCount = 1;
+    [SerializeField] private int c_score = 0;
+    [SerializeField] private int c_tileCount = 1;
+
     private ObjectPooler objectPooler;
 
     
@@ -37,7 +38,7 @@ public class TileSpawner : MonoBehaviour
     void Update()
     {
         // there will always be (numberOfInitialTiles-1) tiles before the player
-        if (player.position.z > (_tileCount - numberOfInitialTiles + 1) * lengthOfPerTile)
+        if (player.position.z > (c_tileCount - numberOfInitialTiles + 1) * lengthOfPerTile)
         {
             SpawnTile(UnityEngine.Random.Range(0, tiles.Length));
         }
@@ -48,16 +49,16 @@ public class TileSpawner : MonoBehaviour
         var tag = "Tile_" + (tileIndex + 1).ToString();
 
         //GameObject newTile = Instantiate(tiles[tileIndex], Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
-        GameObject newTile = objectPooler.SpawnFromPool(tag, Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
-        _tileCount++;
+        GameObject newTile = objectPooler.SpawnFromPool(tag, Vector3.forward * c_tileCount * lengthOfPerTile, Quaternion.identity);
+        c_tileCount++;
         UpdateUIText();
     }
 
     private void UpdateUIText()
     {
         // _score = _tileCount - 5;
-        _score = Mathf.FloorToInt(player.position.z / lengthOfPerTile);
-        _score = (_score <= 0)? 0: _score;
-        scoreText.text = "Score: " + _score.ToString();
+        c_score = Mathf.FloorToInt(player.position.z / lengthOfPerTile);
+        c_score = (c_score <= 0)? 0: c_score;
+        scoreText.text = "Score: " + c_score.ToString();
     }
 }

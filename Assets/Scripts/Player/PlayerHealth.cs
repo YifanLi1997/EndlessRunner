@@ -9,6 +9,9 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] GameObject gameOverPanel;
 
+    [Header("Only for Config")]
+    [SerializeField] GameObject c_hit;
+
     void Start()
     {
         Time.timeScale = 1;
@@ -33,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (hit.transform.tag == "Obstacle")
         {
+            c_hit = hit.gameObject;
             playerHealth--;
             UpdateUIText();
 
