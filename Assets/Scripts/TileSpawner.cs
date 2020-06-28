@@ -54,11 +54,13 @@ public class TileSpawner : MonoBehaviour
         UpdateUIText();
     }
 
+    // TODO: better make another script to handle the UI text
     private void UpdateUIText()
     {
-        // _score = _tileCount - 5;
+        // TODO: bug - the score will jump from 0 directly to 2
+        //c_score = c_tileCount - 5;
         c_score = Mathf.FloorToInt(player.position.z / lengthOfPerTile);
-        c_score = (c_score <= 0)? 0: c_score;
+        c_score = (c_score <= 0) ? 0 : c_score;
         scoreText.text = "Score: " + c_score.ToString();
     }
 }

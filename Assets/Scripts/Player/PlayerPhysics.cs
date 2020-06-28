@@ -8,6 +8,7 @@ public class PlayerPhysics : MonoBehaviour
     [SerializeField] float laneWidth = 1.5f;
 
     private CharacterController _characterController;
+    private Animator _animator;
 
     private Vector3 _moveDirection;
     [SerializeField] float forwardSpeed = 5f;
@@ -18,6 +19,7 @@ public class PlayerPhysics : MonoBehaviour
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
+        _animator = GetComponentInChildren<Animator>();
         _moveDirection.z = forwardSpeed;
     }
 
@@ -40,13 +42,15 @@ public class PlayerPhysics : MonoBehaviour
     {
         if (_characterController.isGrounded)
         {
+            _animator.SetBool("IsJumping", false);
             //if (Input.GetKeyDown(KeyCode.UpArrow))
             if (InputController.swipeUp)
             {
+                _animator.SetBool("IsJumping", true);
                 _moveDirection.y = jumpForce;
             }
+            
         }
-        
     }
 
     private void LeftRightMove()
@@ -87,6 +91,8 @@ public class PlayerPhysics : MonoBehaviour
     private void FixedUpdate()
     {
         if (!PlayerManager.gameStarted || PlayerManager.gameOver) return;
+
+        _animator.SetBool("IsRunning", true);
         _characterController.Move(_moveDirection * Time.fixedDeltaTime);
     }
 }
