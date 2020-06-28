@@ -15,7 +15,7 @@ public class TileSpawner : MonoBehaviour
     // only for visualization
     [Header("Only for Config")]
     [SerializeField] private int _score = 0;
-    [SerializeField] private int _tileCount = 0;
+    [SerializeField] private int _tileCount = 1;
     private ObjectPooler objectPooler;
 
     
@@ -28,7 +28,7 @@ public class TileSpawner : MonoBehaviour
 
         for (int i = 0; i < numberOfInitialTiles - 1; i++)
         {
-            SpawnTile(UnityEngine.Random.Range(0, tiles.Length));
+            SpawnTile(UnityEngine.Random.Range(0, tiles.Length)); 
         }
 
         UpdateUIText();
@@ -45,8 +45,10 @@ public class TileSpawner : MonoBehaviour
 
     private void SpawnTile(int tileIndex)
     {
+        var tag = "Tile_" + (tileIndex + 1).ToString();
+
         //GameObject newTile = Instantiate(tiles[tileIndex], Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
-        GameObject newTile = objectPooler.SpawnFromPool("Tile_" + (tileIndex+1).ToString(), Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
+        GameObject newTile = objectPooler.SpawnFromPool(tag, Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
         _tileCount++;
         UpdateUIText();
     }
