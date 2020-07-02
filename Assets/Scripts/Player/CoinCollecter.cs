@@ -6,6 +6,8 @@ using TMPro;
 public class CoinCollecter : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI coinText;
+    [SerializeField] AudioClip coinClip;
+    [SerializeField] float coinClipVolume = 0.5f;
 
     [Header("Only for Config")]
     [SerializeField] private int c_numberOfCoins = 0;
@@ -24,6 +26,7 @@ public class CoinCollecter : MonoBehaviour
             coinAnimator.SetTrigger("IsDisappearing");
             StartCoroutine(DelayDisable(other));
             c_numberOfCoins++;
+            AudioSource.PlayClipAtPoint(coinClip, Camera.main.transform.position, coinClipVolume);
             UpdateUIText();
         }
     }
@@ -35,8 +38,11 @@ public class CoinCollecter : MonoBehaviour
 
     IEnumerator DelayDisable(Collider other)
     {
+        other.enabled = false;
         yield return new WaitForSeconds(0.5f); // the length of the disappearing animator
+        other.enabled = true;
         other.gameObject.SetActive(false);
+        other.transform.localScale = new Vector3(60,60,60); //reset transform
     }
 
 }

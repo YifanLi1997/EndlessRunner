@@ -16,6 +16,9 @@ public class PlayerPhysics : MonoBehaviour
     [SerializeField] float jumpForce = 10f;
     [SerializeField] float gravity = -20f;
 
+    [SerializeField] AudioClip jumpClip;
+    [SerializeField] float jumpClipVolume = 0.5f;
+
 
     void Start()
     {
@@ -76,6 +79,7 @@ public class PlayerPhysics : MonoBehaviour
             {
                 _animator.SetBool("IsJumping", true);
                 _moveDirection.y = jumpForce;
+                AudioSource.PlayClipAtPoint(jumpClip, Camera.main.transform.position, jumpClipVolume);
             }
             
         }
