@@ -1385,6 +1385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laneWidth: 2.75
   forwardSpeed: 20
+  maxForwardSpeed: 40
   jumpForce: 5
   gravity: -10
 --- !u!143 &812830669
@@ -1413,9 +1414,9 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 812830667}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1
+  m_Radius: 2
   m_Height: 10
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -1770,7 +1771,7 @@ MonoBehaviour:
   - {fileID: 764551882680361787, guid: 39d6744ad8c8149aabd1cc5272ee74c0, type: 3}
   - {fileID: 8723050931474594635, guid: b06d7debd13924df6aa5a2f91e7336a4, type: 3}
   player: {fileID: 812830673}
-  lengthOfPerTile: 20
+  lengthOfPerTile: 30
   numberOfInitialTiles: 5
   numberOfTilesText: {fileID: 62293567}
   c_tileCount: 1
@@ -2456,6 +2457,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1130178354}
     m_Modifications:
+    - target: {fileID: 7556301493005999176, guid: 2a5909412b8944738a353e5ecdf8e6e0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 7556301493157034912, guid: 2a5909412b8944738a353e5ecdf8e6e0,
         type: 3}
       propertyPath: m_LocalPosition.x

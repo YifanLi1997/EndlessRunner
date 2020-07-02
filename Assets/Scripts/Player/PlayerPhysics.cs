@@ -11,7 +11,8 @@ public class PlayerPhysics : MonoBehaviour
     private Animator _animator;
 
     private Vector3 _moveDirection;
-    [SerializeField] float forwardSpeed = 5f;
+    [SerializeField] float forwardSpeed = 15f;
+    [SerializeField] float maxForwardSpeed = 20f;
     [SerializeField] float jumpForce = 10f;
     [SerializeField] float gravity = -20f;
 
@@ -28,9 +29,36 @@ public class PlayerPhysics : MonoBehaviour
     {
         if (!PlayerManager.gameStarted || PlayerManager.gameOver) return;
 
+        IncreaseForwardSpeed();
         Gravity();
-        Jump();
         LeftRightMove();
+        Jump();
+        StartCoroutine(Slide());
+
+    }
+
+    IEnumerator Slide()
+    {
+        if (InputController.swipeDown)
+        {
+            _animator.SetBool("IsSliding", true);
+            _characterController.center = new Vector3(0, -0.5f, 0);
+            _characterController.height = 0.1f;
+
+            yield return new WaitForSeconds(0.45f); // length of the animator
+            _characterController.center = new Vector3(0, 0, 0);
+            _characterController.height = 2;
+            _animator.SetBool("IsSliding", false) ;
+        }
+    }
+
+    private void IncreaseForwardSpeed()
+    {
+        if (forwardSpeed < maxForwardSpeed)
+        {
+            forwardSpeed += 0.1f * Time.deltaTime;
+            _moveDirection.z = forwardSpeed;
+        }
     }
 
     private void Gravity()
