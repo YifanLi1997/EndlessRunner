@@ -10,12 +10,12 @@ public class TileSpawner : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] float lengthOfPerTile = 20;
     [SerializeField] int numberOfInitialTiles = 5;
-    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI numberOfTilesText;
 
     // only for visualization
     [Header("Only for Config")]
-    [SerializeField] private int c_score = 0;
-    [SerializeField] private int c_tileCount = 1;
+    //[SerializeField] private int c_score = 0; // no longer used
+    [SerializeField] private int c_tileCount = 0;
 
     private ObjectPooler objectPooler;
 
@@ -23,9 +23,6 @@ public class TileSpawner : MonoBehaviour
     void Start()
     {
         objectPooler = ObjectPooler.Instance;
-
-        // the first one will always be tile 0
-        SpawnTile(0);
 
         for (int i = 0; i < numberOfInitialTiles - 1; i++)
         {
@@ -49,7 +46,7 @@ public class TileSpawner : MonoBehaviour
         var tag = "Tile_" + (tileIndex + 1).ToString();
 
         //GameObject newTile = Instantiate(tiles[tileIndex], Vector3.forward * _tileCount * lengthOfPerTile, Quaternion.identity);
-        GameObject newTile = objectPooler.SpawnFromPool(tag, Vector3.forward * c_tileCount * lengthOfPerTile, Quaternion.identity);
+        objectPooler.SpawnFromPool(tag, Vector3.forward * c_tileCount * lengthOfPerTile, Quaternion.identity);
         c_tileCount++;
         UpdateUIText();
     }
@@ -57,10 +54,14 @@ public class TileSpawner : MonoBehaviour
     // TODO: better make another script to handle the UI text
     private void UpdateUIText()
     {
+        #region no longer used
         // TODO: bug - the score will jump from 0 directly to 2
         //c_score = c_tileCount - 5;
-        c_score = Mathf.FloorToInt(player.position.z / lengthOfPerTile);
-        c_score = (c_score <= 0) ? 0 : c_score;
-        scoreText.text = "Score: " + c_score.ToString();
+        //c_score = Mathf.FloorToInt(player.position.z / lengthOfPerTile);
+        //c_score = (c_score <= 0) ? 0 : c_score;
+        //numberOfTilesText.text = "Score: " + c_score.ToString();
+        #endregion
+
+        numberOfTilesText.text = "Tiles: " + c_tileCount.ToString();
     }
 }
